@@ -1,13 +1,14 @@
 import dash
 from dash import callback_context
-from dash import dcc
-from dash import html
 from dash.dependencies import Output, Input
-import dash_bootstrap_components as dbc
-
-import pandas as pd
 import plotly.express as px
 from datetime import date
+import pandas as pd
+from dash import dcc, html
+import dash_table
+from dash_table.Format import Format
+import dash_bootstrap_components as dbc
+
 
 bit = pd.read_csv("BIT.csv")
 defensive = pd.read_excel('defensive details.xlsx', sheet_name='similar_pairs_defensive_all')
@@ -19,20 +20,11 @@ df1_neutral = neutral
 df1_offensive =offensive
 
 df2 = bit[["BIT_ID", "Country 1", "Country 2", "Year"]]
-
-import pandas as pd
-import dash
-from dash import dcc, html
-from dash.dependencies import Input, Output
-import dash_table
-from dash_table.Format import Format
-import dash_bootstrap_components as dbc
-
 # Sample data initialization
 # (Ensure to define your dataframes here)
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+server = app.server
 app.layout = html.Div([
     # Outermost Container
     html.Div([
