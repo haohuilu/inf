@@ -95,6 +95,75 @@ app.layout = html.Div([
      State('year-end-input', 'value'),
      State('strategy-selection', 'value')]
 )
+
+def update_table(n, sim_start, sim_end, year_start, year_end, strategy):    # ... (the callback remains unchanged)
+
+    # Choosing dataframe based on selected strategy
+    if strategy == 'defensive':
+        chosen_df1 = df1_defensive
+    elif strategy == 'neutral':
+        chosen_df1 = df1_neutral
+    else:
+        chosen_df1 = df1_offensive
+
+    # Filter dataframes based on inputs
+    filtered_df1 = chosen_df1[(chosen_df1['similarity'] >= sim_start) & (chosen_df1['similarity'] <= sim_end)]
+    filtered_df2 = df2[(df2['Year'] >= year_start) & (df2['Year'] <= year_end)]
+
+    # Frequency of Unique BIT
+    freq_df = pd.concat([filtered_df1['BIT1'], filtered_df1['BIT2']]).value_counts().reset_index()
+    freq_df.columns = ['BIT_ID', 'Frequency']
+
+    # Weight column
+    total_freq = freq_df['Frequency'].sum()
+    freq_df['Weight'] = freq_df['Frequency'] / total_freq
+
+    # Aggregate weight by country
+    agg_df = pd.merge(freq_df, filtered_df2, on='BIT_ID', how='inner')
+    country_weight = pd.concat([agg_df[['Country 1', 'Weight']], agg_df[['Country 2', 'Weight']].rename(columns={'Country 2': 'Country 1'})])
+    country_weight_agg = country_weight.groupby('Country 1')['Weight'].sum().reset_index().sort_values(by='Weight', ascending=False)
+
+    # Rename the column 'Country 1' to 'Country'
+    country_weight_agg.rename(columns={'Country 1': 'Country'}, inplace=True)
+    
+    if country_weight_agg.empty:
+        card_content = [html.H4("No Info Available")]
+        table = html.Div(["No information available for the selected year(s)."])
+        return table, card_content
+
+    # Card for highest country by weight
+    highest_country = country_weight_agg.iloc[0]
+    card_content = [
+        html.H4('Who plays the major role?'),
+        html.H2(highest_country['Country']),
+        html.P(f"Weight: {highest_country['Weight']:.4f}")
+    ]
+
+    # Using DataTable for paginated display
+    table = dash_table.DataTable(
+        columns=[
+            {"name": "Country", "id": "Country"},
+            {"name": "INF Weight", "id": "Weight", "type": "numeric", "format": Format(precision=4)}
+        ],
+        data=country_weight_agg.to_dict('records'),
+        page_size=10,
+        style_table={'height': '400px', 'overflowY': 'auto'},     
+        style_header={
+            'fontWeight': 'bold',
+            'color': 'black',
+            'border': '1px solid black',
+            'textAlign': 'center'  # Centering header text
+        },
+        style_cell={
+            'textAlign': 'center'  # Centering cell text
+        }
+    )
+
+    return table, card_content
+
+
+
+
 def on_calculate_button_click(n_clicks, sim_start, sim_end, year_start, year_end, strategy):
     return update_table(n_clicks, sim_start, sim_end, year_start, year_end, strategy)
 
