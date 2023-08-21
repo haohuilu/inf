@@ -9,7 +9,6 @@ import dash_table
 from dash_table.Format import Format
 import dash_bootstrap_components as dbc
 
-
 bit = pd.read_csv("BIT.csv")
 defensive = pd.read_excel('defensive details.xlsx', sheet_name='similar_pairs_defensive_all')
 neutral = pd.read_excel('neutral details.xlsx', sheet_name='similar_pairs_neutral_all')
@@ -20,6 +19,15 @@ df1_neutral = neutral
 df1_offensive =offensive
 
 df2 = bit[["BIT_ID", "Country 1", "Country 2", "Year"]]
+
+import pandas as pd
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import dash_table
+from dash_table.Format import Format
+import dash_bootstrap_components as dbc
+
 # Sample data initialization
 # (Ensure to define your dataframes here)
 
@@ -59,6 +67,9 @@ app.layout = html.Div([
                     dcc.Input(id='year-start-input', type='number', value=1959, style={'marginRight': '10px'}),
                     dcc.Input(id='year-end-input', type='number', value=2022)
                 ], style={'marginTop': '10px'}),
+                html.Div([
+                    dbc.Button("Calculate", id="calculate-button", color="primary", className="mt-2")
+                ], style={'marginTop': '20px'})
             ], style={'width': '25%', 'padding': '20px', 'borderRight': 'solid 1px #ddd'}),
 
             # Right Side
@@ -74,23 +85,22 @@ app.layout = html.Div([
     ], style={'borderTop': '1px solid #ddd', 'background': '#f4f4f4'}),
 ])
 
-
 @app.callback(
-    [
-     Output('output-table', 'children'),
-     Output('major-role-card', 'children')
-    ],
-    [
-     Input('similarity-start-input', 'value'),
-     Input('similarity-end-input', 'value'),
-     Input('year-start-input', 'value'),
-     Input('year-end-input', 'value'),
-     Input('strategy-selection', 'value')
-    ]
+    [Output('output-table', 'children'),
+     Output('major-role-card', 'children')],
+    [Input('calculate-button', 'n_clicks')],
+    [State('similarity-start-input', 'value'),
+     State('similarity-end-input', 'value'),
+     State('year-start-input', 'value'),
+     State('year-end-input', 'value'),
+     State('strategy-selection', 'value')]
 )
-def update_table(sim_start, sim_end, year_start, year_end, strategy):
-    # ... (the callback remains unchanged)
+def on_calculate_button_click(n_clicks, sim_start, sim_end, year_start, year_end, strategy):
+    return update_table(n_clicks, sim_start, sim_end, year_start, year_end, strategy)
 
+    
+    # ... (the callback remains unchanged)
+    
     # Choosing dataframe based on selected strategy
     if strategy == 'defensive':
         chosen_df1 = df1_defensive
