@@ -122,6 +122,7 @@ def update_table(n, sim_start, sim_end, year_start, year_end, strategy):    # ..
     agg_df = pd.merge(freq_df, filtered_df2, on='BIT_ID', how='inner')
     country_weight = pd.concat([agg_df[['Country 1', 'Weight']], agg_df[['Country 2', 'Weight']].rename(columns={'Country 2': 'Country 1'})])
     country_weight_agg = country_weight.groupby('Country 1')['Weight'].sum().reset_index().sort_values(by='Weight', ascending=False)
+    country_weight_agg['Weight'] = country_weight_agg['Weight'].round(4)
 
     # Rename the column 'Country 1' to 'Country'
     country_weight_agg.rename(columns={'Country 1': 'Country'}, inplace=True)
