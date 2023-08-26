@@ -39,7 +39,7 @@ app.layout = html.Div([
         # Header with Logo and Title
         html.Div([
             html.Img(src='/assets/1.png', id='logo', style={'height': '80px'}),
-            html.H2('National influence in clause dissemination across BITs', style={'marginLeft': '20px'})
+            html.H2('National influence in clause dissemination for safeguarding health across BITs', style={'marginLeft': '20px'})
         ], style={'display': 'flex', 'alignItems': 'center', 'background': '#f4f4f4', 'borderBottom': 'solid 1px #ddd', 'padding': '10px'}),
 
         # Main Content Container
