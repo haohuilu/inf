@@ -29,7 +29,6 @@ from dash_table.Format import Format
 import dash_bootstrap_components as dbc
 
 # Sample data initialization
-# (Ensure to define your dataframes here)
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
@@ -41,7 +40,7 @@ app.layout = html.Div([
             html.Img(src='/assets/1.png', id='logo', style={'height': '80px'}),
             html.H2('National influence in clause dissemination for safeguarding health across BITs', style={'marginLeft': '20px'})
         ], style={'display': 'flex', 'alignItems': 'center', 'background': '#f4f4f4', 'borderBottom': 'solid 1px #ddd', 'padding': '10px'}),
-
+        
         # Main Content Container
         html.Div([
             # Left Side
@@ -69,8 +68,19 @@ app.layout = html.Div([
                 ], style={'marginTop': '10px'}),
                 html.Div([
                     dbc.Button("Calculate", id="calculate-button", color="primary", className="mt-2")
-                ], style={'marginTop': '20px'})
+                ], style={'marginTop': '20px'}), 
+                html.Div([
+                    html.P("Researchers using this tool for research should cite the following article:", style={'fontStyle': 'italic'}),
+                    html.P([
+                        "Uddin, S., Lu, H., Alschner, W., Patay, D., Frank, N., Gomes, F.S., and Thow, A.M., ",
+                        html.I("An NLP-based novel approach for assessing national influence in clause dissemination across bilateral investment treaties"),  # Italicized title
+                        ". Plos one, ",
+                        html.B("19"),  # Bold volume number
+                        "(3): p. e0298380.",
+                    ], style={'marginBottom': '20px', 'fontSize': '14px'})
+                ], style={'padding': '10px 0'}),
             ], style={'width': '25%', 'padding': '20px', 'borderRight': 'solid 1px #ddd'}),
+        
 
             # Right Side
             html.Div([
@@ -147,7 +157,7 @@ def update_table(n, sim_start, sim_end, year_start, year_end, strategy):    # ..
             {"name": "INF Weight", "id": "Weight", "type": "numeric", "format": Format(precision=4)}
         ],
         data=country_weight_agg.to_dict('records'),
-        page_size=10,
+        page_size=100,
         style_table={'height': '400px', 'overflowY': 'auto'},     
         style_header={
             'fontWeight': 'bold',
