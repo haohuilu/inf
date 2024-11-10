@@ -53,6 +53,9 @@ app.layout = html.Div([
                         html.Br(),
                         "Chatbot (beta): ",
                         html.A("http://chatbot.inftool.com", href="https://chatbot.inftool.com", target="_blank")  # Hyperlink to Chatbot
+                        html.Br(),
+                        "Text Similarity Tool",
+                        html.A("https://bitsimilarity.onrender.com", href="https://bitsimilarity.onrender.com", target="_blank")  # Hyperlink to Chatbot
                     ], style={'marginBottom': '20px', 'fontSize': '14px'})
                 ], style={'padding': '10px 0'}),  # Spacer to move the content down
                 dcc.RadioItems(
