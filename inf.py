@@ -52,7 +52,7 @@ app.layout = html.Div([
                         html.A("http://video.inftool.com", href="http://video.inftool.com", target="_blank"),  # Hyperlink to Demo Video
                         html.Br(),
                         "Chatbot (beta): ",
-                        html.A("http://chatbot.inftool.com", href="https://chatbot.inftool.com", target="_blank")  # Hyperlink to Chatbot
+                        html.A("http://chatbot.inftool.com", href="https://chatbot.inftool.com", target="_blank"),  # Hyperlink to Chatbot
                         html.Br(),
                         "Text Similarity Tool",
                         html.Br(),
