@@ -48,6 +48,7 @@ app.layout = html.Div([
                 html.Div([
                     html.P([
                         "Demo Video: ",
+                        html.Br(),
                         html.A("http://video.inftool.com", href="http://video.inftool.com", target="_blank"),  # Hyperlink to Demo Video
                         html.Br(),
                         "Chatbot (beta): ",
