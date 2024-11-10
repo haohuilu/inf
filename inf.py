@@ -45,12 +45,20 @@ app.layout = html.Div([
         html.Div([
             # Left Side
             html.Div([
-                html.Div(style={'height': '50px'}),  # Spacer to move the content down
+                html.Div([
+                    html.P([
+                        "Demo Video: ",
+                        html.A("http://video.inftool.com", href="http://video.inftool.com", target="_blank"),  # Hyperlink to Demo Video
+                        html.Br(),
+                        "Chatbot (beta): ",
+                        html.A("http://chatbot.inftool.com", href="https://chatbot.inftool.com", target="_blank")  # Hyperlink to Chatbot
+                    ], style={'marginBottom': '20px', 'fontSize': '14px'})
+                ], style={'padding': '10px 0'}),  # Spacer to move the content down
                 dcc.RadioItems(
                     options=[
                         {'label': ' Defensive', 'value': 'defensive'},
                         {'label': ' Neutral', 'value': 'neutral'},
-                        {'label': ' Offensive', 'value': 'offensive'},
+                        {'label': ' Progressive', 'value': 'offensive'},
                     ],
                     value='defensive',
                     id='strategy-selection',
