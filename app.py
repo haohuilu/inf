@@ -142,26 +142,6 @@ CITATION = html.P(
 
 controls = html.Div(
     [
-        html.Div(
-            [
-                html.P(
-                    [
-                        "Demo Video: ",
-                        html.Br(),
-                        html.A("http://video.inftool.com", href="http://video.inftool.com", target="_blank"),
-                        html.Br(),
-                        "Chatbot (beta): ",
-                        html.A("http://chatbot.inftool.com", href="https://chatbot.inftool.com", target="_blank"),
-                        html.Br(),
-                        "Text Similarity Tool: ",
-                        html.Br(),
-                        html.A("https://bitsimilarity.onrender.com", href="https://bitsimilarity.onrender.com", target="_blank"),
-                    ],
-                    style={"marginBottom": "20px", "fontSize": "14px"},
-                )
-            ],
-            style={"padding": "10px 0"},
-        ),
         dcc.RadioItems(
             options=[
                 {"label": " Defensive", "value": "defensive"},
