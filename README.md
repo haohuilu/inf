@@ -122,14 +122,6 @@ two BITs' clauses for the given strategy.
 
 ---
 
-## Related tools
-
-- Demo video: http://video.inftool.com
-- Chatbot (beta): https://chatbot.inftool.com
-- Text Similarity Tool: https://bitsimilarity.onrender.com
-
----
-
 ## Citation
 
 If you use this tool in your research, please cite:
